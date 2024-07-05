@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
   };
 
   const addingDot = () => {
-    if (dotPresent === false) {
+    if (!dotPresent) {
       addingNumbers(".");
     }
     setDotPresent(true);
@@ -67,7 +67,16 @@ const App = () => {
     setNextOperand("");
     setPrevOperand("");
     setOperator("");
+    setDotPresent(false);
   };
+
+  useEffect(() => {
+    if (!dotPresent) {
+      if (String(nextOperand).includes(".")) {
+        setDotPresent(true);
+      }
+    }
+  }, [nextOperand, dotPresent]);
 
   console.log(isOperate);
   console.log(nextOperand);
